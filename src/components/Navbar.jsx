@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useContext } from "react"; // 1. Import useContext
 import { Link } from "react-router-dom";
+import { ShopContext } from "../context/ShopContext"; // 2. Import the created context
 
-const Navbar = ({ token, cartCount, handleLogout }) => {
+const Navbar = () => {
+  // 3. Grab data directly from context
+  const { token, logout, cart } = useContext(ShopContext); 
+
   return (
     <nav style={styles.nav}>
       <h1 style={{ margin: 0 }}>MyStore</h1>
       <div style={styles.links}>
         <Link style={styles.link} to="/">Home</Link>
-        <Link style={styles.link} to="/cart">Cart ({cartCount})</Link>
+        <Link style={styles.link} to="/cart">Cart ({cart.length})</Link>
+        
         {token ? (
-          <button onClick={handleLogout} style={styles.logoutBtn}>Logout</button>
+          <button onClick={logout} style={styles.logoutBtn}>Logout</button>
         ) : (
           <Link style={styles.link} to="/login">Login</Link>
         )}

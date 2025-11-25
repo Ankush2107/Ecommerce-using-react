@@ -1,13 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ShopContext } from "../context/ShopContext"; // Import
 
-const Cart = ({ cart, setCart }) => {
-  
-  // Helper to remove item
-  const removeFromCart = (id) => {
-    setCart(cart.filter((item) => item.id !== id));
-  };
+const Cart = () => {
+  // Get cart and removeFromCart from Context
+  const { cart, removeFromCart } = useContext(ShopContext); 
 
-  // Calculate Total
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   if (cart.length === 0) return <h2 style={{ textAlign: "center" }}>Cart is Empty</h2>;

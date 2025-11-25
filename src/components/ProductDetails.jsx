@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { ShopContext } from "../context/ShopContext"; // Import
 
-const ProductDetails = ({ addToCart }) => {
+const ProductDetails = () => {
+  const { addToCart } = useContext(ShopContext); // Get addToCart from Context
   const { id } = useParams();
   const [product, setProduct] = useState(null);
 
@@ -12,7 +14,7 @@ const ProductDetails = ({ addToCart }) => {
       .catch((err) => console.log(err));
   }, [id]);
 
-  if (!product) return <div>Loading details...</div>;
+  if (!product) return <div>Loading...</div>;
 
   return (
     <div style={styles.container}>
@@ -21,6 +23,7 @@ const ProductDetails = ({ addToCart }) => {
         <h2>{product.title}</h2>
         <p>{product.description}</p>
         <h3>${product.price}</h3>
+        {/* Use the function from context */}
         <button onClick={() => addToCart(product)} style={styles.btn}>
           Add To Cart
         </button>
