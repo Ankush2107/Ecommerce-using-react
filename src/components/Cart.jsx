@@ -3,7 +3,7 @@ import { ShopContext } from "../context/ShopContext"; // Import
 
 const Cart = () => {
   // Get cart and removeFromCart from Context
-  const { cart, removeFromCart } = useContext(ShopContext); 
+  const { cart, removeFromCart, increaseQuantity, decreaseQuantity } = useContext(ShopContext); 
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -17,6 +17,11 @@ const Cart = () => {
           <img src={item.image} alt={item.title} style={{ width: "60px" }} />
           <div style={{ flex: 1, padding: "0 20px" }}>
             <h4>{item.title}</h4>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+           <button onClick={() => decreaseQuantity(item.id)}>-</button>
+           <span>{item.quantity}</span>
+           <button onClick={() => increaseQuantity(item.id)}>+</button>
+        </div>
             <p>${item.price} x {item.quantity}</p>
           </div>
           <button onClick={() => removeFromCart(item.id)} style={styles.removeBtn}>

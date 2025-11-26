@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext"; // Import Context
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { setToken } = useContext(ShopContext); // Get setToken from Context
@@ -23,9 +24,10 @@ const Login = () => {
       // Use the context function
       setToken(res.data.token);
       localStorage.setItem("userToken", res.data.token);
+       toast.success("Login Successful! Welcome back.");
       navigate("/");
     } catch (err) {
-      setError("Login failed.");
+        toast.error("Invalid Credentials. Please try again.");
     }
   };
 

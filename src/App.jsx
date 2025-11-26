@@ -5,6 +5,7 @@ import Products from "./components/Products";
 import ProductDetails from "./components/ProductDetails";
 import Cart from "./components/Cart";
 import Login from "./components/Login";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   // No state here anymore!
@@ -12,6 +13,7 @@ function App() {
 
   return (
     <BrowserRouter>
+    <ToastContainer position="top-right" autoClose={2000} hideProgressBar={false} />
       {/* No props passed to Navbar */}
       <Navbar /> 
       <div style={{ padding: "20px" }}>

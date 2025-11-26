@@ -1,18 +1,17 @@
 import React, { createContext, useState, useEffect } from "react";
+import { toast } from "react-toastify";
 
 export const ShopContext = createContext();
 
 export const ShopProvider = ({ children }) => {
-  
-
   const [token, setToken] = useState(localStorage.getItem("userToken") ?? null);
 
   const logout = () => {
     setToken(null);
     localStorage.removeItem("userToken");
+    toast.info("You have logged out.");
   };
 
-  // --- Cart Logic ---
   const [cart, setCart] = useState(() => {
     const savedCart = localStorage.getItem("cart");
     return savedCart ? JSON.parse(savedCart) : [];
@@ -30,25 +29,47 @@ export const ShopProvider = ({ children }) => {
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
         )
       );
+      toast.info(`Increased quantity of ${product.title}`);
     } else {
       setCart([...cart, { ...product, quantity: 1 }]);
+      toast.success("Item added to cart!");
     }
-    alert("Added to cart!");
   };
 
   const removeFromCart = (id) => {
     setCart(cart.filter((item) => item.id !== id));
+    toast.error("Item removed from cart.");
   };
 
-  // --- Value Object ---
-  // This is what will be available to any component in your app
+  const decreaseQuantity = (id) => {
+    setCart(
+      cart.map((item) => {
+        if (item.id === id) {
+          // If quantity is greater than 1, decrease it
+          return { ...item, quantity: item.quantity > 1 ? item.quantity - 1 : 1 };
+        }
+        return item;
+      })
+    );
+  };
+  
+  const increaseQuantity = (id) => {
+    setCart(
+      cart.map((item) => 
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
   const value = {
     token,
     setToken,
     logout,
     cart,
     addToCart,
-    removeFromCart
+    removeFromCart,
+    increaseQuantity,
+    decreaseQuantity,
   };
 
   return (
