@@ -7,6 +7,7 @@ const Products = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState(""); 
   const [filter, setFilter] = useState("all");
+  const [sortOrder, setSortOrder] = useState("");
 
   useEffect(() => {
     axios.get("https://fakestoreapi.com/products")
@@ -19,11 +20,23 @@ const Products = () => {
 
   if (loading) return <div style={{ textAlign: "center" }}>Loading products...</div>;
 
-  const displayedProducts = products.filter((product) => {
-    const matchesSearch = product.title.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = filter === "all" || product.category === filter;
-    return matchesSearch && matchesCategory;
-  });
+    const displayedProducts = products.filter((product) => {
+      const matchesSearch = product.title.toLowerCase().includes(search.toLowerCase());
+      const matchesCategory = filter === "all" || product.category === filter;
+      return matchesSearch && matchesCategory;
+    });
+
+  const getSortedProducts = [...displayedProducts].sort((a, b) => {
+    if(sortOrder === "low") {
+      return a.price - b.price
+    }
+    if(sortOrder === "high") {
+      return b.price - a.price
+    }
+    return 0
+  })
+
+
 
   return (
     <div>
@@ -43,9 +56,18 @@ const Products = () => {
           <option value="electronics">Electronics</option>
           <option value="jewelery">Jewelery</option>
         </select>
+
+        <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+          <span style={{fontWeight: "bold"}}>Sort by price: </span>
+          <select onChange={(e) => setSortOrder(e.target.value)} style={{ padding: "8px" }}>
+            <option value="">Default</option>
+            <option value="low">Low to High</option>
+            <option value="high">High to low</option>
+          </select>
+      </div>
       </div>
       <div style={styles.grid}>
-        {displayedProducts.map((product) => (
+        {getSortedProducts.length > 0 ?(getSortedProducts.map((product) => (
           <div key={product.id} style={styles.card}>
             <img src={product.image} alt={product.title} style={styles.image} />
             <h4 style={{ height: "40px", overflow: "hidden" }}>{product.title}</h4>
@@ -54,7 +76,9 @@ const Products = () => {
               <button style={styles.btn}>View Details</button>
             </Link>
           </div>
-        ))}
+        ))) : (
+          <h3> No products Found</h3>
+        )}
       </div>
     </div>
     

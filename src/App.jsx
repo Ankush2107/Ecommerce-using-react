@@ -8,18 +8,13 @@ import Login from "./components/Login";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-  // No state here anymore!
-  // No helper functions here anymore!
-
   return (
     <BrowserRouter>
     <ToastContainer position="top-right" autoClose={2000} hideProgressBar={false} />
-      {/* No props passed to Navbar */}
       <Navbar /> 
       <div style={{ padding: "20px" }}>
         <Routes>
           <Route path="/" element={<Products />} />
-          {/* No props passed to pages */}
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
