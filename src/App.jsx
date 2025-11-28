@@ -6,6 +6,8 @@ import ProductDetails from "./components/ProductDetails";
 import Cart from "./components/Cart";
 import Login from "./components/Login";
 import { ToastContainer } from "react-toastify";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Checkout from "./components/Checkout";
 
 function App() {
   return (
@@ -18,6 +20,14 @@ function App() {
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
+          <Route 
+            path="/checkout"
+            element={
+              <ProtectedRoute>
+                <Checkout/>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
       </div>
     </BrowserRouter>

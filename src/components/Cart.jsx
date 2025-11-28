@@ -1,8 +1,12 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../context/ShopContext"; 
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { cart, removeFromCart, increaseQuantity, decreaseQuantity } = useContext(ShopContext); 
+
+  const navigate = useNavigate();
+
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   if (cart.length === 0) return <h2 style={{ textAlign: "center" }}>Cart is Empty</h2>;
 
@@ -28,6 +32,10 @@ const Cart = () => {
       ))}
       <div style={styles.total}>
         <h3>Total Amount: ${total.toFixed(2)}</h3>
+
+        <button style={styles.checkoutBtn} onClick={() => navigate("/checkout")}>
+          Proceed to checkout
+        </button>
       </div>
     </div>
   );
@@ -36,7 +44,17 @@ const Cart = () => {
 const styles = {
   item: { display: "flex", alignItems: "center", borderBottom: "1px solid #eee", padding: "15px 0" },
   removeBtn: { background: "red", color: "white", border: "none", padding: "8px 12px" },
-  total: { textAlign: "right", marginTop: "20px" }
+  total: { textAlign: "right", marginTop: "20px" },
+  checkoutBtn: {
+    marginTop: "10px",
+    padding: "12px 20px",
+    background: "black",
+    color: "white",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "16px",
+    borderRadius: "5px"
+  }
 };
 
 export default Cart;

@@ -61,6 +61,10 @@ export const ShopProvider = ({ children }) => {
     );
   };
 
+  const clearCart = () => {
+    setCart([]);
+  }
+
   const value = {
     token,
     setToken,
@@ -70,6 +74,7 @@ export const ShopProvider = ({ children }) => {
     removeFromCart,
     increaseQuantity,
     decreaseQuantity,
+    clearCart
   };
 
   return (

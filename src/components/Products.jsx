@@ -64,10 +64,10 @@ const Products = () => {
             <option value="low">Low to High</option>
             <option value="high">High to low</option>
           </select>
-      </div>
+        </div>
       </div>
       <div style={styles.grid}>
-        {getSortedProducts.length > 0 ?(getSortedProducts.map((product) => (
+        {getSortedProducts.length > 0 ? (getSortedProducts.map((product) => (
           <div key={product.id} style={styles.card}>
             <img src={product.image} alt={product.title} style={styles.image} />
             <h4 style={{ height: "40px", overflow: "hidden" }}>{product.title}</h4>
